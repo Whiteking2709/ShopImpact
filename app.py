@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-
 from datetime import date
 
 from database import initialize_database, get_categories
@@ -52,16 +51,13 @@ if "tip_index" not in st.session_state:
 
 
 # ==================================================
-# APPLICATION DESIGN
+# DESIGN AND STYLING
 # ==================================================
 
 st.markdown("""
 <style>
 
-/* ================================================
-   MAIN PAGE
-================================================ */
-
+/* Main background */
 .stApp {
     background-color: #F5F7F2 !important;
     color: #24352B !important;
@@ -73,29 +69,20 @@ st.markdown("""
     max-width: 1200px;
 }
 
-/* ================================================
-   HEADINGS
-================================================ */
-
+/* Headings */
 h1, h2, h3, h4, h5 {
     color: #173D2A !important;
     font-weight: 700 !important;
 }
 
-/* ================================================
-   NORMAL TEXT
-================================================ */
-
+/* Normal text */
 .stMarkdown p,
 .stMarkdown li,
 [data-testid="stCaptionContainer"] p {
     color: #344A3B !important;
 }
 
-/* ================================================
-   SIDEBAR
-================================================ */
-
+/* Sidebar */
 [data-testid="stSidebar"] {
     background-color: #E6EEE5 !important;
 }
@@ -108,25 +95,14 @@ h1, h2, h3, h4, h5 {
     color: #173D2A !important;
 }
 
-/* Sidebar radio buttons */
-[data-testid="stSidebar"] [role="radiogroup"] label {
-    color: #173D2A !important;
-}
-
-/* ================================================
-   INPUT LABELS
-================================================ */
-
+/* Widget labels */
 [data-testid="stWidgetLabel"] p,
 [data-testid="stWidgetLabel"] label {
     color: #173D2A !important;
     font-weight: 650 !important;
 }
 
-/* ================================================
-   TEXT INPUTS
-================================================ */
-
+/* Input fields */
 .stTextInput input,
 .stNumberInput input,
 .stDateInput input,
@@ -138,17 +114,13 @@ h1, h2, h3, h4, h5 {
     border-radius: 8px !important;
 }
 
-/* Input placeholder text */
 .stTextInput input::placeholder,
 .stTextArea textarea::placeholder {
     color: #78877C !important;
     -webkit-text-fill-color: #78877C !important;
 }
 
-/* ================================================
-   DROPDOWNS
-================================================ */
-
+/* Dropdowns */
 [data-baseweb="select"] > div {
     background-color: #FFFFFF !important;
     border: 1px solid #9BAC9D !important;
@@ -159,7 +131,6 @@ h1, h2, h3, h4, h5 {
     color: #17251C !important;
 }
 
-/* Dropdown options */
 [role="listbox"] {
     background-color: #FFFFFF !important;
 }
@@ -173,10 +144,7 @@ h1, h2, h3, h4, h5 {
     background-color: #E6EEE5 !important;
 }
 
-/* ================================================
-   BUTTONS
-================================================ */
-
+/* Buttons */
 .stButton > button,
 .stFormSubmitButton > button {
     background-color: #1E5939 !important;
@@ -198,10 +166,7 @@ h1, h2, h3, h4, h5 {
     border-color: #16442B !important;
 }
 
-/* ================================================
-   ALERT BOXES
-================================================ */
-
+/* Alerts */
 [data-testid="stAlert"] {
     background-color: #E4F0E5 !important;
     border: 1px solid #B8D1BB !important;
@@ -214,10 +179,7 @@ h1, h2, h3, h4, h5 {
     color: #173D2A !important;
 }
 
-/* ================================================
-   METRIC CARDS
-================================================ */
-
+/* Metric cards */
 [data-testid="stMetric"] {
     background-color: #FFFFFF !important;
     border: 1px solid #C8D5C9 !important;
@@ -235,10 +197,7 @@ h1, h2, h3, h4, h5 {
     color: #173D2A !important;
 }
 
-/* ================================================
-   DATA TABLES
-================================================ */
-
+/* Data tables */
 [data-testid="stDataFrame"] {
     background-color: #FFFFFF !important;
     border: 1px solid #C8D5C9 !important;
@@ -246,27 +205,18 @@ h1, h2, h3, h4, h5 {
     overflow: hidden;
 }
 
-/* ================================================
-   TABS
-================================================ */
-
+/* Tabs */
 button[data-baseweb="tab"] {
     color: #173D2A !important;
     font-weight: 650 !important;
 }
 
-/* ================================================
-   DIVIDERS
-================================================ */
-
+/* Dividers */
 hr {
     border-color: #CCD7CC !important;
 }
 
-/* ================================================
-   TREE CARD
-================================================ */
-
+/* Tree illustration */
 .tree-card {
     background: linear-gradient(145deg, #E4F0E2, #FFFFFF);
     border: 1px solid #B8CEB9;
@@ -287,12 +237,10 @@ hr {
         transform: scale(0.2);
         opacity: 0.2;
     }
-
     75% {
         transform: scale(1.1);
         opacity: 1;
     }
-
     100% {
         transform: scale(1);
     }
@@ -309,10 +257,7 @@ hr {
     font-size: 15px;
 }
 
-/* ================================================
-   FOOTER
-================================================ */
-
+/* Footer */
 footer {
     color: #647568 !important;
 }
@@ -326,7 +271,6 @@ footer {
 # ==================================================
 
 def load_purchases():
-
     records = get_purchase_history()
 
     if not records:
@@ -347,39 +291,19 @@ def navigate(page):
 def get_tree_stage(purchase_count):
 
     if purchase_count == 0:
-        return (
-            "🌱",
-            "Seed",
-            "Your tree is waiting for your first recorded purchase."
-        )
+        return "🌱", "Seed", "Your tree is waiting for your first recorded purchase."
 
     elif purchase_count < 3:
-        return (
-            "🌿",
-            "Sprout",
-            "Your tree has started growing."
-        )
+        return "🌿", "Sprout", "Your tree has started growing."
 
     elif purchase_count < 6:
-        return (
-            "🪴",
-            "Young Plant",
-            "Your tree is growing with your activity."
-        )
+        return "🪴", "Young Plant", "Your tree is growing with your activity."
 
     elif purchase_count < 10:
-        return (
-            "🌳",
-            "Growing Tree",
-            "Your tree is becoming stronger."
-        )
+        return "🌳", "Growing Tree", "Your tree is becoming stronger."
 
     else:
-        return (
-            "🌲",
-            "Full-Grown Tree",
-            "You have reached the highest tree stage!"
-        )
+        return "🌲", "Full-Grown Tree", "You have reached the highest tree stage!"
 
 
 # ==================================================
@@ -391,15 +315,13 @@ categories = get_categories()
 
 
 # ==================================================
-# SIDEBAR NAVIGATION
+# SIDEBAR
 # ==================================================
 
 with st.sidebar:
 
     st.title("🌱 ShopImpact")
-
     st.write("Shop consciously. Make better choices.")
-
     st.divider()
 
     navigation = [
@@ -427,7 +349,6 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-
     st.caption("IBCP Python Programming Project")
 
 
@@ -463,7 +384,6 @@ if st.session_state.page == "Home":
         monthly_impact = monthly_df["estimated_impact"].sum()
 
     else:
-
         monthly_spending = 0
         monthly_impact = 0
 
@@ -471,20 +391,9 @@ if st.session_state.page == "Home":
 
     col1, col2, col3 = st.columns(3)
 
-    col1.metric(
-        "Monthly Spending",
-        money(monthly_spending)
-    )
-
-    col2.metric(
-        "Estimated Impact",
-        f"{monthly_impact:.2f} points"
-    )
-
-    col3.metric(
-        "Total Purchases",
-        len(purchases_df)
-    )
+    col1.metric("Monthly Spending", money(monthly_spending))
+    col2.metric("Estimated Impact", f"{monthly_impact:.2f} points")
+    col3.metric("Total Purchases", len(purchases_df))
 
     st.divider()
 
@@ -523,7 +432,6 @@ if st.session_state.page == "Home":
         st.subheader("Recent Purchases")
 
         if purchases_df.empty:
-
             st.info("You haven't added any purchases yet.")
 
         else:
@@ -544,8 +452,7 @@ if st.session_state.page == "Home":
                     ]
                 ],
                 use_container_width=True,
-                hide_index=True,
-                theme="light"
+                hide_index=True
             )
 
     with col2:
@@ -556,7 +463,6 @@ if st.session_state.page == "Home":
 
         if count >= 1:
             st.success("🌱 First Purchase Badge")
-
         else:
             st.info("Add your first purchase to earn a badge.")
 
@@ -615,10 +521,7 @@ elif st.session_state.page == "Add Purchase":
                 min_value=0.0,
                 value=0.0,
                 step=50.0,
-                help=(
-                    "Enter the actual price you paid. "
-                    "For example, enter 850 for a purchase costing ₹850."
-                )
+                help="Enter the actual amount paid in Indian Rupees."
             )
 
             st.caption(
@@ -645,14 +548,10 @@ elif st.session_state.page == "Add Purchase":
             if submitted:
 
                 if not product_name.strip():
-
                     st.error("Please enter a product name.")
 
                 elif price <= 0:
-
-                    st.error(
-                        "Please enter a purchase amount greater than zero."
-                    )
+                    st.error("Please enter an amount greater than zero.")
 
                 else:
 
@@ -679,10 +578,7 @@ elif st.session_state.page == "Add Purchase":
                         navigate("Purchase Result")
 
                     except Exception as error:
-
-                        st.error(
-                            f"Unable to add purchase: {error}"
-                        )
+                        st.error(f"Unable to add purchase: {error}")
 
     st.divider()
 
@@ -726,14 +622,8 @@ elif st.session_state.page == "Add Purchase":
 
         if request_submitted:
 
-            if (
-                not missing_product.strip()
-                or not missing_category.strip()
-            ):
-
-                st.error(
-                    "Please enter both product and category names."
-                )
+            if not missing_product.strip() or not missing_category.strip():
+                st.error("Please enter both product and category names.")
 
             else:
 
@@ -745,12 +635,9 @@ elif st.session_state.page == "Add Purchase":
                         suggested_value
                     )
 
-                    st.success(
-                        "Your category request has been submitted."
-                    )
+                    st.success("Your category request has been submitted.")
 
                 except Exception as error:
-
                     st.error(str(error))
 
 
@@ -783,29 +670,20 @@ elif st.session_state.page == "Purchase Result":
 
             st.write(f"**Product:** {purchase['product_name']}")
             st.write(f"**Category:** {purchase['category_name']}")
-            st.write(
-                f"**Brand:** {purchase['brand'] or 'Not specified'}"
-            )
+            st.write(f"**Brand:** {purchase['brand'] or 'Not specified'}")
 
         with col2:
 
+            st.write(f"**Amount Paid:** {money(purchase['price'])}")
             st.write(
-                f"**Amount Paid:** {money(purchase['price'])}"
-            )
-
-            st.write(
-                f"**Date:** "
-                f"{purchase['purchase_date'].strftime('%d %B %Y')}"
+                f"**Date:** {purchase['purchase_date'].strftime('%d %B %Y')}"
             )
 
         st.divider()
 
         st.subheader("Estimated Environmental Impact")
 
-        st.metric(
-            "Impact Points",
-            f"{purchase['impact']:.2f}"
-        )
+        st.metric("Impact Points", f"{purchase['impact']:.2f}")
 
         st.caption(
             "This is a simplified estimated score, "
@@ -816,18 +694,12 @@ elif st.session_state.page == "Purchase Result":
 
         with col1:
 
-            if st.button(
-                "Back to Dashboard",
-                use_container_width=True
-            ):
+            if st.button("Back to Dashboard", use_container_width=True):
                 navigate("Home")
 
         with col2:
 
-            if st.button(
-                "View Purchase History",
-                use_container_width=True
-            ):
+            if st.button("View Purchase History", use_container_width=True):
                 navigate("History")
 
 
@@ -838,9 +710,7 @@ elif st.session_state.page == "Purchase Result":
 elif st.session_state.page == "History":
 
     st.title("Purchase History")
-
     st.write("View your recorded purchases.")
-
     st.divider()
 
     if purchases_df.empty:
@@ -857,8 +727,7 @@ elif st.session_state.page == "History":
         st.dataframe(
             history,
             use_container_width=True,
-            hide_index=True,
-            theme="light"
+            hide_index=True
         )
 
         st.divider()
@@ -960,44 +829,23 @@ elif st.session_state.page == "Eco Badges & Tips":
     with col1:
 
         if purchase_count >= 1:
-
-            st.success(
-                "🌱 First Purchase\n\nUnlocked"
-            )
-
+            st.success("🌱 First Purchase\n\nUnlocked")
         else:
-
-            st.info(
-                "🌱 First Purchase\n\nLocked"
-            )
+            st.info("🌱 First Purchase\n\nLocked")
 
     with col2:
 
         if purchase_count >= 5:
-
-            st.success(
-                "🌿 Conscious Shopper\n\nUnlocked"
-            )
-
+            st.success("🌿 Conscious Shopper\n\nUnlocked")
         else:
-
-            st.info(
-                "🌿 Conscious Shopper\n\nLocked"
-            )
+            st.info("🌿 Conscious Shopper\n\nLocked")
 
     with col3:
 
         if purchase_count >= 10:
-
-            st.success(
-                "🌳 Responsible Shopper\n\nUnlocked"
-            )
-
+            st.success("🌳 Responsible Shopper\n\nUnlocked")
         else:
-
-            st.info(
-                "🌳 Responsible Shopper\n\nLocked"
-            )
+            st.info("🌳 Responsible Shopper\n\nLocked")
 
     st.divider()
 
@@ -1012,9 +860,7 @@ elif st.session_state.page == "Eco Badges & Tips":
 
     st.subheader("Shopping Tip of the Day")
 
-    st.info(
-        tips[st.session_state.tip_index]
-    )
+    st.info(tips[st.session_state.tip_index])
 
     if st.button("Show Another Tip"):
 
@@ -1026,7 +872,7 @@ elif st.session_state.page == "Eco Badges & Tips":
 
 
 # ==================================================
-# SHOPPING ANALYTICS - PANDAS
+# ANALYTICS USING PANDAS
 # ==================================================
 
 elif st.session_state.page == "Analytics":
@@ -1042,9 +888,7 @@ elif st.session_state.page == "Analytics":
 
     if purchases_df.empty:
 
-        st.info(
-            "Add purchases to start generating analytics."
-        )
+        st.info("Add purchases to start generating analytics.")
 
     else:
 
@@ -1066,16 +910,12 @@ elif st.session_state.page == "Analytics":
             .reset_index()
         )
 
-        monthly_spending.columns = [
-            "Month",
-            "Total Spending"
-        ]
+        monthly_spending.columns = ["Month", "Total Spending"]
 
         st.dataframe(
             monthly_spending,
             use_container_width=True,
-            hide_index=True,
-            theme="light"
+            hide_index=True
         )
 
         st.line_chart(
@@ -1090,10 +930,7 @@ elif st.session_state.page == "Analytics":
             .reset_index()
         )
 
-        monthly_impact.columns = [
-            "Month",
-            "Estimated Impact"
-        ]
+        monthly_impact.columns = ["Month", "Estimated Impact"]
 
         monthly_impact["Previous Month"] = (
             monthly_impact["Estimated Impact"].shift(1)
@@ -1110,50 +947,35 @@ elif st.session_state.page == "Analytics":
         st.dataframe(
             monthly_impact.round(2),
             use_container_width=True,
-            hide_index=True,
-            theme="light"
+            hide_index=True
         )
 
         if len(monthly_impact) >= 2:
 
-            previous = monthly_impact.iloc[-2][
-                "Estimated Impact"
-            ]
-
-            latest = monthly_impact.iloc[-1][
-                "Estimated Impact"
-            ]
+            previous = monthly_impact.iloc[-2]["Estimated Impact"]
+            latest = monthly_impact.iloc[-1]["Estimated Impact"]
 
             if previous > 0:
 
-                change = (
-                    (latest - previous) / previous
-                ) * 100
+                change = ((latest - previous) / previous) * 100
 
                 if change < 0:
-
                     st.success(
                         f"Estimated impact decreased by "
                         f"{abs(change):.2f}% compared with the previous month."
                     )
 
                 elif change > 0:
-
                     st.warning(
                         f"Estimated impact increased by "
                         f"{change:.2f}% compared with the previous month."
                     )
 
                 else:
-
-                    st.info(
-                        "Estimated impact remained unchanged."
-                    )
+                    st.info("Estimated impact remained unchanged.")
 
         st.line_chart(
-            monthly_impact.set_index("Month")[
-                ["Estimated Impact"]
-            ]
+            monthly_impact.set_index("Month")[["Estimated Impact"]]
         )
 
         st.subheader("Product-wise Analysis")
@@ -1166,23 +988,17 @@ elif st.session_state.page == "Analytics":
                 Number_of_Purchases=("purchase_id", "count")
             )
             .reset_index()
-            .sort_values(
-                "Total_Impact",
-                ascending=False
-            )
+            .sort_values("Total_Impact", ascending=False)
         )
 
         st.dataframe(
             product_analysis,
             use_container_width=True,
-            hide_index=True,
-            theme="light"
+            hide_index=True
         )
 
         st.bar_chart(
-            product_analysis.set_index("product_name")[
-                ["Total_Impact"]
-            ]
+            product_analysis.set_index("product_name")[["Total_Impact"]]
         )
 
         st.subheader("Category-wise Analysis")
@@ -1195,23 +1011,17 @@ elif st.session_state.page == "Analytics":
                 Number_of_Purchases=("purchase_id", "count")
             )
             .reset_index()
-            .sort_values(
-                "Total_Impact",
-                ascending=False
-            )
+            .sort_values("Total_Impact", ascending=False)
         )
 
         st.dataframe(
             category_analysis,
             use_container_width=True,
-            hide_index=True,
-            theme="light"
+            hide_index=True
         )
 
         st.bar_chart(
-            category_analysis.set_index("category_name")[
-                ["Total_Impact"]
-            ]
+            category_analysis.set_index("category_name")[["Total_Impact"]]
         )
 
         st.caption(
@@ -1253,7 +1063,6 @@ elif st.session_state.page == "Administrator":
                     st.rerun()
 
                 else:
-
                     st.error("Incorrect password.")
 
             except Exception:
@@ -1268,13 +1077,11 @@ elif st.session_state.page == "Administrator":
         col1, col2 = st.columns([4, 1])
 
         with col1:
-
             st.success("Administrator access granted.")
 
         with col2:
 
             if st.button("Logout"):
-
                 st.session_state.admin_authenticated = False
                 st.rerun()
 
@@ -1286,9 +1093,7 @@ elif st.session_state.page == "Administrator":
             "Add Category"
         ])
 
-        # ------------------------------------------
         # CATEGORY REQUESTS
-        # ------------------------------------------
 
         with admin_tab1:
 
@@ -1310,8 +1115,7 @@ elif st.session_state.page == "Administrator":
                     ):
 
                         st.write(
-                            f"Suggested Impact: "
-                            f"{request['suggested_value']}"
+                            f"Suggested Impact: {request['suggested_value']}"
                         )
 
                         default_value = (
@@ -1349,7 +1153,6 @@ elif st.session_state.page == "Administrator":
                                     st.rerun()
 
                                 except Exception as error:
-
                                     st.error(str(error))
 
                         with col2:
@@ -1367,9 +1170,7 @@ elif st.session_state.page == "Administrator":
                                 st.success("Request rejected.")
                                 st.rerun()
 
-        # ------------------------------------------
         # MANAGE CATEGORIES
-        # ------------------------------------------
 
         with admin_tab2:
 
@@ -1406,9 +1207,7 @@ elif st.session_state.page == "Administrator":
                         value=selected["greener_alternative"] or ""
                     )
 
-                    save_category = st.form_submit_button(
-                        "Save Changes"
-                    )
+                    save_category = st.form_submit_button("Save Changes")
 
                     if save_category:
 
@@ -1424,12 +1223,9 @@ elif st.session_state.page == "Administrator":
                             st.rerun()
 
                         except Exception as error:
-
                             st.error(str(error))
 
-        # ------------------------------------------
         # ADD CATEGORY
-        # ------------------------------------------
 
         with admin_tab3:
 
@@ -1437,9 +1233,7 @@ elif st.session_state.page == "Administrator":
 
             with st.form("admin_add_category"):
 
-                category_name = st.text_input(
-                    "Category Name"
-                )
+                category_name = st.text_input("Category Name")
 
                 impact_value = st.number_input(
                     "Impact Value",
@@ -1449,13 +1243,9 @@ elif st.session_state.page == "Administrator":
                     step=0.01
                 )
 
-                alternative = st.text_input(
-                    "Greener Alternative"
-                )
+                alternative = st.text_input("Greener Alternative")
 
-                submitted = st.form_submit_button(
-                    "Add Category"
-                )
+                submitted = st.form_submit_button("Add Category")
 
                 if submitted:
 
@@ -1467,14 +1257,10 @@ elif st.session_state.page == "Administrator":
                             alternative
                         )
 
-                        st.success(
-                            "Category added successfully."
-                        )
-
+                        st.success("Category added successfully.")
                         st.rerun()
 
                     except Exception as error:
-
                         st.error(str(error))
 
 
