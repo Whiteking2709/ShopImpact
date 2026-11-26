@@ -158,6 +158,7 @@ h1, h2, h3, h4, h5 {
 .stButton > button *,
 .stFormSubmitButton > button * {
     color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
 }
 
 .stButton > button:hover,
@@ -166,17 +167,62 @@ h1, h2, h3, h4, h5 {
     border-color: #16442B !important;
 }
 
-/* Alerts */
+/* SUCCESS AND ALERT BOXES */
 [data-testid="stAlert"] {
+    background: #E4F0E5 !important;
     background-color: #E4F0E5 !important;
     border: 1px solid #B8D1BB !important;
     border-radius: 10px !important;
 }
 
+[data-testid="stAlert"] > div {
+    background: #E4F0E5 !important;
+    background-color: #E4F0E5 !important;
+}
+
 [data-testid="stAlert"] p,
 [data-testid="stAlert"] span,
-[data-testid="stAlert"] div {
+[data-testid="stAlert"] div,
+[data-testid="stAlert"] li {
     color: #173D2A !important;
+    -webkit-text-fill-color: #173D2A !important;
+}
+
+/* Custom recommendation box */
+.recommendation-box {
+    background-color: #E4F0E5 !important;
+    border: 1px solid #B8D1BB;
+    border-radius: 12px;
+    padding: 22px;
+    color: #173D2A !important;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.recommendation-box p {
+    color: #173D2A !important;
+    margin: 0;
+}
+
+/* Custom badge boxes */
+.badge-unlocked {
+    background-color: #E4F0E5 !important;
+    border: 1px solid #B8D1BB;
+    border-radius: 12px;
+    padding: 20px;
+    color: #173D2A !important;
+    font-weight: 650;
+    min-height: 85px;
+}
+
+.badge-locked {
+    background-color: #E9EDF2 !important;
+    border: 1px solid #C5CDD6;
+    border-radius: 12px;
+    padding: 20px;
+    color: #344256 !important;
+    font-weight: 650;
+    min-height: 85px;
 }
 
 /* Metric cards */
@@ -303,7 +349,31 @@ def get_tree_stage(purchase_count):
         return "🌳", "Growing Tree", "Your tree is becoming stronger."
 
     else:
-        return "🌲", "Full-Grown Tree", "You have reached the highest tree stage!"
+        return "🌲", "Full-Grown Tree", "You have reached the highest tree stage."
+
+
+def show_badge(title, unlocked, icon):
+
+    if unlocked:
+        st.markdown(
+            f"""
+            <div class="badge-unlocked">
+                {icon} {title}<br><br>
+                Unlocked
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            f"""
+            <div class="badge-locked">
+                {icon} {title}<br><br>
+                Locked
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # ==================================================
@@ -461,16 +531,9 @@ if st.session_state.page == "Home":
 
         count = len(purchases_df)
 
-        if count >= 1:
-            st.success("🌱 First Purchase Badge")
-        else:
-            st.info("Add your first purchase to earn a badge.")
-
-        if count >= 5:
-            st.success("🌿 Conscious Shopper Badge")
-
-        if count >= 10:
-            st.success("🌳 Responsible Shopper Badge")
+        show_badge("First Purchase Badge", count >= 1, "🌱")
+        show_badge("Conscious Shopper Badge", count >= 5, "🌿")
+        show_badge("Responsible Shopper Badge", count >= 10, "🌳")
 
     st.divider()
 
@@ -779,9 +842,18 @@ elif st.session_state.page == "Greener Choices":
 
         st.subheader("Recommended Alternative")
 
-        st.success(
+        alternative_text = (
             selected_data["greener_alternative"]
             or "Consider reusable or second-hand alternatives."
+        )
+
+        st.markdown(
+            f"""
+            <div class="recommendation-box">
+                <p>{alternative_text}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
     st.divider()
@@ -827,25 +899,13 @@ elif st.session_state.page == "Eco Badges & Tips":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-
-        if purchase_count >= 1:
-            st.success("🌱 First Purchase\n\nUnlocked")
-        else:
-            st.info("🌱 First Purchase\n\nLocked")
+        show_badge("First Purchase", purchase_count >= 1, "🌱")
 
     with col2:
-
-        if purchase_count >= 5:
-            st.success("🌿 Conscious Shopper\n\nUnlocked")
-        else:
-            st.info("🌿 Conscious Shopper\n\nLocked")
+        show_badge("Conscious Shopper", purchase_count >= 5, "🌿")
 
     with col3:
-
-        if purchase_count >= 10:
-            st.success("🌳 Responsible Shopper\n\nUnlocked")
-        else:
-            st.info("🌳 Responsible Shopper\n\nLocked")
+        show_badge("Responsible Shopper", purchase_count >= 10, "🌳")
 
     st.divider()
 
